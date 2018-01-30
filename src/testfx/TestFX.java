@@ -155,8 +155,6 @@ public class TestFX extends Application {
             
             @Override
             public void handle(ActionEvent event) {
-                lineChart.getData().remove(series);
-                
                 // data event
                 int total_slot = Integer.parseInt(textField2.getText());
                 int total_event = Integer.parseInt(textField1.getText());
@@ -169,12 +167,10 @@ public class TestFX extends Application {
                 // data test
                 int total_data = Integer.parseInt(textField8.getText());
                 
-                XYChart.Series series2 = new XYChart.Series();
-                series2.setName("Data");
-                
+                series.getData().clear();
                 for (int i = 0; i < 30; i++) {
                     BatchScheduller BS = new BatchScheduller(total_event,total_personil,busy,normal,loose,time_block,total_slot,total_data);
-                    series2.getData().add(new XYChart.Data((i+1)+"("+busy+","+normal+","+loose+")",((float)BS.failSchedulles/total_data)/total_event*100));
+                    series.getData().add(new XYChart.Data((i+1)+"("+busy+","+normal+","+loose+")",((float)BS.failSchedulles/total_data)/total_event*100));
                     if(busy>0){
                         busy--;
                         normal++;
@@ -183,8 +179,6 @@ public class TestFX extends Application {
                     }
                     loose = total_personil - busy - normal;
                 }
-                
-                lineChart.getData().add(series2);
             }
         });
         GP.add(btn, 0, 8);
